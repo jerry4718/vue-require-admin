@@ -79,7 +79,7 @@ define([
             },
             async tapRouteNav ({id: menuId, moduleUrl: menuUrl}) {
                 if (this.curRouteMenuId === menuId) {
-                    // 这里做当前页面刷新的处理，emit或者notify
+                    // todo: 这里做当前页面刷新的处理，emit或者notify
                     return;
                 }
                 this.curRouteMenuId = menuId;
