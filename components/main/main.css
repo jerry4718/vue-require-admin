@@ -24,7 +24,7 @@
     padding: 0 15px;
     border-radius: 5px;
     color: #FFF;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .page-head-nav.selected {
@@ -45,13 +45,15 @@
     background-color: #ffffff;
     width: 200px;
 }
+
 .sub-menu-nav {
     display: flex;
     flex-direction: column;
     flex-grow: 0;
     transition: all .5s;
 }
-.sub-menu-nav span{
+
+.sub-menu-nav span {
     width: 100%;
     overflow: hidden;
     display: block;
@@ -61,23 +63,29 @@
     line-height: 24px;
     flex-grow: 0;
 }
+
 .sub-menu-nav.selected {
     flex-grow: 1;
 }
+
 .sub-menu-nav.selected > span {
     color: #5198D1;
 }
+
 .route-menu-bar::-webkit-scrollbar {
-    display:none;
+    display: none;
 }
+
 .route-menu-bar {
     flex-grow: 1;
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
 .route-menu-nav {
     padding-left: 5px;
 }
+
 .route-menu-nav.selected {
     background: #eeeeee;
 }
@@ -93,9 +101,11 @@
     flex-direction: column;
     flex-wrap: nowrap;
 }
+
 .route-path {
 
 }
+
 .route-template {
     flex-grow: 1;
 }

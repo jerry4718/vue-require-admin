@@ -1,17 +1,21 @@
-define(['common/api/api.js', 'text!components/main.html', 'css!components/main.css'], function (api, template) {
+define([
+    'common/api/api.js',
+    'text!components/main/main.html',
+    'css!components/main/main.css',
+], function (api, template) {
     let routesUnique = [];
 
     let menuProto = {
         id: 0,
-        moduleUrl: "",
-        moduleName: "",
-        moduleDescribe: "",
+        moduleUrl: '',
+        moduleName: '',
+        moduleDescribe: '',
         moduleSequence: 0,
     };
 
     return {
         template: template,
-        data() {
+        data () {
             return {
                 curTabMenuId: 0,
                 curSubMenuId: 0,
@@ -27,10 +31,10 @@ define(['common/api/api.js', 'text!components/main.html', 'css!components/main.c
                 }],
                 routeMenus: [{
                     ...menuProto,
-                }]
-            }
+                }],
+            };
         },
-        async mounted() {
+        async mounted () {
             let res = await api.menuList({parentId: 0});
 
             this.tabMenus = res && res.data || [{}];
@@ -39,7 +43,7 @@ define(['common/api/api.js', 'text!components/main.html', 'css!components/main.c
             }
         },
         watch: {
-            async curTabMenuId(newId) {
+            async curTabMenuId (newId) {
                 this.subMenus = [];
                 this.routeMenus = [];
                 let res = await api.menuList({parentId: newId});
@@ -49,7 +53,7 @@ define(['common/api/api.js', 'text!components/main.html', 'css!components/main.c
                     this.curSubMenuId = this.subMenus[0].id;
                 }
             },
-            async curSubMenuId(newId) {
+            async curSubMenuId (newId) {
                 this.routeMenus = [];
                 let sdx = this.subMenus.findIndex(s => s.id === newId);
                 let subMenu = this.subMenus[sdx];
@@ -65,15 +69,15 @@ define(['common/api/api.js', 'text!components/main.html', 'css!components/main.c
             },
         },
         methods: {
-            tapNav(menuId) {
+            tapNav (menuId) {
                 this.curTabMenuId = menuId;
                 console.log(menuId);
             },
-            tapSubNav(menuId) {
+            tapSubNav (menuId) {
                 this.curSubMenuId = menuId;
                 console.log(menuId);
             },
-            async tapRouteNav({id: menuId, moduleUrl: menuUrl}) {
+            async tapRouteNav ({id: menuId, moduleUrl: menuUrl}) {
                 if (this.curRouteMenuId === menuId) {
                     // 这里做当前页面刷新的处理，emit或者notify
                     return;
@@ -91,9 +95,9 @@ define(['common/api/api.js', 'text!components/main.html', 'css!components/main.c
                     ns: [this.curTabMenuId, this.curSubMenuId, menuId],
                 });
                 // 跳转路由
-                this.$router.push({name: routeName})
+                this.$router.push({name: routeName});
             },
-            async routeRegister({id, url, name, ns}) {
+            async routeRegister ({id, url, name, ns}) {
                 if (routesUnique.indexOf(id) > -1) {
                     return;
                 }
@@ -117,26 +121,26 @@ define(['common/api/api.js', 'text!components/main.html', 'css!components/main.c
 
                 const pushRoute = moduleObject => {
                     const component = {
-                        render(h) {
+                        render (h) {
                             return h(
                                 'div',
                                 {'class': {'route-content': true}},
                                 [
                                     h('div', {'class': {'route-path': true}}, `path: ${path}, ${Date.now()}`),
                                     h('div', {'class': {'route-template': true}},
-                                        moduleObject ? [h(moduleObject)] : [`Not Found: ${moduleUrl}`]
+                                        moduleObject ? [h(moduleObject)] : [`Not Found: ${moduleUrl}`],
                                     ),
-                                ]
-                            )
-                        }
+                                ],
+                            );
+                        },
                     };
 
                     routesUnique.push(id);
                     this.$router.addRoutes([{
                         path, name, component,
                         meta: {
-                            keepAlive: true //需要被缓存的组件
-                        }
+                            keepAlive: true, //需要被缓存的组件
+                        },
                     }]);
                 };
 
@@ -233,5 +237,5 @@ define(['common/api/api.js', 'text!components/main.html', 'css!components/main.c
                 ])
             ])
         },*/
-    }
+    };
 });
