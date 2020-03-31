@@ -5,9 +5,19 @@
 让非专业前端开发人员，
 可以在最少量借助node工具链的基础上，快速完成开发
 
+### 模板工具使用
+
+```sh
+# 新建页面
+node kits/code-gen/page.js xxx/xxx xxx/xx
+```
+
 ### todo
 
-- 后续引入ESLint严格控制代码风格（快速打脸）
+- 后续引入ESLint严格控制代码风格（快速打了不想用node工具的脸）
+- 从app.js中分离requirejs的配置文件
+- 从main.component.js中分离指定公用模板的配置文件
+- 可在后端指定该页面默认调用的接口（一般来讲，crm中，每个页面都回去请求数据）
 
 
 ### 相关文档

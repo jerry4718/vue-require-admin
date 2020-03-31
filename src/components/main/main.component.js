@@ -105,15 +105,16 @@ define([
                 const path = `${url.replace(/^(\/|)/, '/')}${url.indexOf('?') > -1 ? '&' : '?'}rel=${ns.join('.')}`;
 
                 const parseModulePath = modulePath => {
+                    // todo：这里可以指定哪些页面是path参数的，这个配置需要从文件中分离
                     const cfg = [
-                        '/cofigParams/enterCfg',
+                        '/config/thirdConfigList',
                     ];
                     for (let match of cfg) {
                         if (modulePath.indexOf(match) === 0) {
                             modulePath = match;
                         }
                     }
-                    return `pages${modulePath}.js`;
+                    return `pages${modulePath}/${modulePath.split(/\//g).pop()}.component.js`;
                 };
 
                 const modulePath = path.split('?')[0];

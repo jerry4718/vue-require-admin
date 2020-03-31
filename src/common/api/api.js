@@ -83,7 +83,7 @@ define(function () {
                 },
                 {
                     id: gen.id,
-                    moduleUrl: 'order/normalList',
+                    moduleUrl: '',
                     moduleName: '订单审核',
                     moduleDescribe: '审核管理',
                     moduleSequence: 3,
@@ -166,9 +166,17 @@ define(function () {
                     childList: [
                         {
                             id: gen.id,
-                            moduleUrl: 'config/thirdConfigList',
-                            moduleName: '第三方配置列表',
-                            moduleDescribe: '第三方配置管理',
+                            moduleUrl: 'config/thirdConfigList/AliyunOSS',
+                            moduleName: '阿里云配置',
+                            moduleDescribe: '阿里云配置调整',
+                            moduleSequence: 3,
+                            childList: [],
+                        },
+                        {
+                            id: gen.id,
+                            moduleUrl: 'config/thirdConfigList/QiniuCloud',
+                            moduleName: '七牛云配置',
+                            moduleDescribe: '七牛云配置调整',
                             moduleSequence: 3,
                             childList: [],
                         },
