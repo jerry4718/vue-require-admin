@@ -1,0 +1,36 @@
+<div>
+    <div class="page-head">
+        <div class="page-head-nav"
+             :class="{'selected': ttm.id === curTabMenuId}"
+             v-for="(ttm, tdx) in tabMenus" :key="tdx"
+             :title="ttm.moduleDescribe">
+            <span @click.stop="tapNav(ttm.id)">{{ttm.moduleName}}</span>
+        </div>
+    </div>
+    <div class="page-body">
+        <div class="page-body-left">
+            <div class="sub-menu-nav"
+                 :class="{'selected': stm.id === curSubMenuId}"
+                 v-for="(stm, sdx) in subMenus" :key="sdx"
+                 :title="stm.moduleDescribe">
+                <span @click.stop="tapSubNav(stm.id)">{{stm.moduleName}}</span>
+
+                <div class="route-menu-bar" v-if="stm.id === curSubMenuId">
+                    <div class="route-menu-nav"
+                         :class="{'selected': rtm.id === curRouteMenuId}"
+                         v-for="(rtm, rdx) in routeMenus" :key="rdx"
+                         :title="rtm.moduleDescribe">
+                        <span @click.stop="tapRouteNav(rtm)">{{rtm.moduleName}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-body-right">
+            <div class="route-history-bar">
+                <div class="route-history-item"></div>
+            </div>
+            {{ $t("0点到6点之间不允许进行转派操作") }}
+            <router-view></router-view>
+        </div>
+    </div>
+</div>

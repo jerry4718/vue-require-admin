@@ -1,0 +1,101 @@
+.page-root {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    width: 100%;
+    background-color: #e5edef;
+}
+
+.page-head {
+    display: flex;
+    flex-flow: row nowrap;
+    height: 35px;
+    padding: 0 5px;
+    width: calc(100% - 10px);
+    background: #1871dd;
+}
+
+.page-head-nav {
+    font-weight: 700;
+    margin-top: 4px;
+    height: 27px;
+    line-height: 27px;
+    font-size: 14px;
+    padding: 0 15px;
+    border-radius: 5px;
+    color: #FFF;
+    cursor:pointer;
+}
+
+.page-head-nav.selected {
+    color: #5198D1;
+    background: #e5edef;
+}
+
+.page-body {
+    margin: 5px;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.page-body-left {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    width: 200px;
+}
+.sub-menu-nav {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    transition: all .5s;
+}
+.sub-menu-nav span{
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    padding-left: 5px;
+    height: 25px;
+    font-size: 12px;
+    line-height: 24px;
+    flex-grow: 0;
+}
+.sub-menu-nav.selected {
+    flex-grow: 1;
+}
+.sub-menu-nav.selected > span {
+    color: #5198D1;
+}
+.route-menu-bar::-webkit-scrollbar {
+    display:none;
+}
+.route-menu-bar {
+    flex-grow: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.route-menu-nav {
+    padding-left: 5px;
+}
+.route-menu-nav.selected {
+    background: #eeeeee;
+}
+
+.page-body-right {
+    margin-left: 5px;
+    background-color: #336677;
+    flex-grow: 1;
+}
+
+.route-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+.route-path {
+
+}
+.route-template {
+    flex-grow: 1;
+}
