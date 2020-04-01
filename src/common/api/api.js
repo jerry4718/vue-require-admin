@@ -1,4 +1,6 @@
-define(function () {
+define(['ajax'], function (ajax) {
+    let wall = ajax('http://localhost:8000/menu/menuList', {method: 'GET'});
+
     let id = 0;
     const gen = {
         get id () {
@@ -218,15 +220,18 @@ define(function () {
 
     tiling();
 
-    console.log(menuData);
-
     return {
         async menuList ({parentId}) {
             if (isNaN(parentId)) {
                 throw Error('parentId must a number');
             }
-            console.log(`api.menuList({parentId: ${parentId})`);
-            return {code: 200, data: menuData.filter(m => m.parentId === parentId).map(m => ({...m}))};
+            try {
+                await wall;
+                return await ajax('http://localhost:8000/menu/menuList', {data: {parentId}});
+            } catch (e) {
+                console.log(`api.menuList({parentId: ${parentId})`);
+                return {code: 200, data: menuData.filter(m => m.parentId === parentId).map(m => ({...m}))};
+            }
         },
     };
 });

@@ -17,7 +17,7 @@ router
     // console.log(Object.keys(context.response));
     // console.log(Object.keys(context.app));
     // console.log(Object.keys(context.state));
-    // console.log(Object.keys());
+    // console.log(Object.keys(context.request));
     // console.log(Object.keys(context.router));
     // console.log(Object.keys(context.params));
     // "response", "app", "state", "request", "router", "params"
@@ -29,7 +29,10 @@ router
     if (params && params.parentId) {
       const db = await sqlite.open("data.db");
       const result: any[] = [];
-      for (const row of db.query("SELECT * FROM Menu WHERE parentId=?", [Number(params.parentId)])) {
+      for (const row of db.query(`
+        SELECT id, parentId, moduleUrl, moduleName, moduleDescribe, moduleSequence 
+        FROM Menu WHERE parentId = ?
+        `, [Number(params.parentId)])) {
         let [id, parentId, moduleUrl, moduleName, moduleDescribe, moduleSequence] = row;
         result.push({id, parentId, moduleUrl, moduleName, moduleDescribe, moduleSequence});
       }
@@ -41,7 +44,21 @@ router
   });
 
 const app = new oak.Application();
+app.use(async (ctx, next) => {
+  ctx.response.headers.set('Access-Control-Allow-Origin', '*');
+  ctx.response.headers.set('Access-Control-Allow-Headers', 'X-Requested-With');
+  ctx.response.headers.set('Access-Control-Allow-Methods', ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'].join(','));
+  await next();
+});
+// app.use(async context => {
+//   console.log(context.request.path);
+//   await oak.send(context, context.request.path, {
+//     root: `${Deno.cwd()}/../src`,
+//     index: "index.html"
+//   });
+// });
 app.use(router.routes());
 app.use(router.allowedMethods());
+
 
 await app.listen({ port: 8000 });

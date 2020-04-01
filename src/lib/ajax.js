@@ -57,7 +57,7 @@ define(function () {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 console.log(xhr);
-                resolve({code: 200, data: JSON.parse(xhr.responseText)})
+                resolve(JSON.parse(xhr.responseText))
             } else if (xhr.status !== 200) {
                 console.log(xhr);
                 reject({code: xhr.status, message: 'request error'});
