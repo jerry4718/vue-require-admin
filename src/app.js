@@ -21,7 +21,7 @@ requirejs.config({
     },
 });
 
-requirejs(['Vue', 'VueRouter', 'VueI18n', 'ajax', 'MgrMain'], function (Vue, VueRouter, VueI18n, ajax, MgrMain) {
+requirejs(['Vue', 'VueRouter', 'VueI18n', 'MgrMain'], function (Vue, VueRouter, VueI18n, MgrMain) {
     const messages = {
         en_id: {},
         zh_cn: {},
