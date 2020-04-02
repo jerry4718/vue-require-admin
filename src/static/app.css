@@ -1,0 +1,7 @@
+#nprogress .spinner {
+    top: 8.5px !important;
+}
+
+#nprogress .bar {
+    top: 38px !important;
+}
