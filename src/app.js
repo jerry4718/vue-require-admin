@@ -2,7 +2,7 @@ requirejs(['config/config'], function (config) {
     requirejs.config(config);
 
     requirejs(['NProgress', 'Vue', 'VueRouter', 'VueI18n', 'MgrMain', 'css!static/app.css'], function (NProgress, Vue, VueRouter, VueI18n, MgrMain) {
-        NProgress.configure({ easing: 'ease', speed: 500/*, showSpinner: false*/ });
+        NProgress.configure({easing: 'ease', speed: 500/*, showSpinner: false*/});
         NProgress.start();
 
         let times = [Math.random() * 500, Math.random() * 500, Math.random() * 500, Math.random() * 500, Math.random() * 500];
