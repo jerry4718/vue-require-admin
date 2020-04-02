@@ -132,13 +132,31 @@ define([
                             resolve();
                         }));
 
+                // extend component
+                moduleObject.data = (function(comp, data) {
+                    const tempData = data ? data.call(comp): {};
+                    return function() {
+                        return {
+                            pager: {
+                                pageCount: 1,
+                                pageNum: 1,
+                            },
+                            ...tempData
+                        };
+                    }
+                })(moduleObject, moduleObject.data);
+
                 const component = {
+                    data() {
+                        // todo 我不知道为什么每次切换route这个extendStamp会刷新
+                        return {extendStamp: Date.now()}
+                    },
                     render(h) {
                         return h(
                             'div',
                             {'class': {'route-content': true}},
                             [
-                                h('div', {'class': {'route-path': true}}, `path: ${path}, ${Date.now()}`),
+                                h('div', {'class': {'route-path': true}}, `path: ${path}, ${this.extendStamp}`),
                                 h('div', {'class': {'route-template': true}},
                                     moduleObject ? [h(moduleObject)] : [`Not Found: ${moduleUrl}`],
                                 ),
