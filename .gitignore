@@ -2,3 +2,5 @@
 /ts-test
 /bin
 .vscode
+bower_components
+node_modules

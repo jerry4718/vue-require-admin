@@ -1,0 +1,20 @@
+{
+  "name": "src",
+  "homepage": "https://github.com/jerry4718/vue-require-admin",
+  "authors": [
+    "jerry4718 <jerry4718@qq.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "nprogress": "^0.2.0"
+  }
+}
