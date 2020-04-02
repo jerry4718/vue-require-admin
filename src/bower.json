@@ -15,6 +15,12 @@
     "tests"
   ],
   "dependencies": {
-    "nprogress": "^0.2.0"
+    "nprogress": "^0.2.0",
+    "vue": "^2.6.11",
+    "vue-router": "^3.1.6",
+    "vue-i18n": "^8.16.0",
+    "require-css": "^0.1.10",
+    "text": "^2.0.16",
+    "requirejs": "^2.3.6"
   }
 }
