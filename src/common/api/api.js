@@ -221,16 +221,16 @@ define(['ajax'], function (ajax) {
     tiling();
 
     return {
-        async menuList ({parentId}) {
-            if (isNaN(parentId)) {
+        async menuList (data) {
+            if (isNaN(data.parentId)) {
                 throw Error('parentId must a number');
             }
             try {
                 await wall;
-                return await ajax('http://localhost:8000/menu/menuList', {data: {parentId}});
+                return await ajax('http://localhost:8000/menu/menuList', {data});
             } catch (e) {
-                console.log(`api.menuList({parentId: ${parentId})`);
-                return {code: 200, data: menuData.filter(m => m.parentId === parentId).map(m => ({...m}))};
+                console.log(`api.menuList({parentId: ${data.parentId})`);
+                return {code: 200, data: menuData.filter(m => m.parentId === data.parentId).map(m => ({...m}))};
             }
         },
     };
