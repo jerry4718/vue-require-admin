@@ -4,31 +4,45 @@ const mkdirSync = require('../mkdir');
 
 const srcPath = path.join(__dirname, '../../src');
 
-const pagePath = path.join(srcPath, 'pages');
+const args = process.argv.slice(2);
 
-const pages = process.argv.slice(2);
+console.log(args);
 
-pages.forEach(dir => {
-    const fileName = dir.split(/\//g).pop();
+const params = args.filter(a => a.indexOf('=') > -1)
+    .reduce((m, p) => {
+        let [k, v] = p.split('=', 2);
+        m[k] = v;
+        return m;
+    }, {});
 
-    console.log(fileName);
-    const fileDir = path.join(pagePath, dir);
+const pagePath = path.join(srcPath, params.path || 'pages');
 
-    console.log(fileDir);
+args.filter(a => a.indexOf('=') < 0)
+    .forEach(dir => {
+        const fileName = dir.split(/\//g).pop();
 
-    mkdirSync(fileDir);
+        const fileDir = path.join(pagePath, dir);
 
-    const jsFilePath = path.join(fileDir, `${fileName}.component.js`);
-    const htmlFilePath = path.join(fileDir, `${fileName}.html`);
-    const cssFilePath = path.join(fileDir, `${fileName}.css`);
+        mkdirSync(fileDir);
 
-    // 兼容windows的路径
-    const htmlFileRelative = path.relative(srcPath, htmlFilePath).replace(/\\/g, '\/');
-    const cssFileRelative = path.relative(srcPath, cssFilePath).replace(/\\/g, '\/');
+        const jsFilePath = path.join(fileDir, `${fileName}.component.js`);
+        const htmlFilePath = path.join(fileDir, `${fileName}.html`);
+        const cssFilePath = path.join(fileDir, `${fileName}.css`);
 
-    console.log(cssFileRelative, htmlFileRelative);
+        // 兼容windows的路径
+        const jsFileRelative = path.relative(srcPath, jsFilePath).replace(/\\/g, '\/');
+        const htmlFileRelative = path.relative(srcPath, htmlFilePath).replace(/\\/g, '\/');
+        const cssFileRelative = path.relative(srcPath, cssFilePath).replace(/\\/g, '\/');
 
-    fs.writeFileSync(jsFilePath, `
+        console.log({
+            path: fileDir,
+            name: fileName,
+            js: jsFileRelative,
+            css: cssFileRelative,
+            html: htmlFileRelative,
+        });
+
+        fs.writeFileSync(jsFilePath, `
 define([
     'text!${htmlFileRelative}',
     /*'css!${cssFileRelative}',*/
@@ -41,12 +55,12 @@ define([
 });
         `.trim());
 
-    fs.writeFileSync(htmlFilePath, `
+        fs.writeFileSync(htmlFilePath, `
 <div>this page is ${dir}</div>
         `.trim());
 
-    fs.writeFileSync(cssFilePath, `
+        fs.writeFileSync(cssFilePath, `
         `.trim());
 
-});
+    });
 console.log();
