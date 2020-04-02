@@ -1,8 +1,9 @@
 define([
+    'NProgress',
     'common/api/api.js',
     'text!components/main/main.html',
     'css!components/main/main.css',
-], function (api, template) {
+], function (NProgress, api, template) {
     let routesUnique = [];
 
     let menuProto = {
@@ -82,6 +83,7 @@ define([
                     // todo: 这里做当前页面刷新的处理，emit或者notify
                     return;
                 }
+                NProgress.start();
                 this.curRouteMenuId = menuId;
                 console.log(menuId);
 
@@ -96,6 +98,7 @@ define([
                 });
                 // 跳转路由
                 this.$router.push({name: routeName});
+                NProgress.done();
             },
             async routeRegister ({id, url, name, ns}) {
                 if (routesUnique.indexOf(id) > -1) {
@@ -120,44 +123,37 @@ define([
                 const modulePath = path.split('?')[0];
                 const moduleUrl = parseModulePath(modulePath);
 
-                const pushRoute = moduleObject => {
-                    const component = {
-                        render (h) {
-                            return h(
-                                'div',
-                                {'class': {'route-content': true}},
-                                [
-                                    h('div', {'class': {'route-path': true}}, `path: ${path}, ${Date.now()}`),
-                                    h('div', {'class': {'route-template': true}},
-                                        moduleObject ? [h(moduleObject)] : [`Not Found: ${moduleUrl}`],
-                                    ),
-                                ],
-                            );
-                        },
-                    };
-
-                    routesUnique.push(id);
-                    this.$router.addRoutes([{
-                        path, name, component,
-                        meta: {
-                            keepAlive: true, //需要被缓存的组件
-                        },
-                    }]);
-                };
-
-                return new Promise((resolve, reject) =>
+                // 使用requirejs去加载component
+                const moduleObject = await new Promise(resolve =>
                     requirejs([moduleUrl],
-                        module => {
-                            console.log(moduleUrl);
-                            console.log(module);
-                            pushRoute(module);
-                            resolve();
-                        },
+                        module => resolve(module),
                         error => {
                             console.error(error);
-                            pushRoute();
                             resolve();
                         }));
+
+                const component = {
+                    render(h) {
+                        return h(
+                            'div',
+                            {'class': {'route-content': true}},
+                            [
+                                h('div', {'class': {'route-path': true}}, `path: ${path}, ${Date.now()}`),
+                                h('div', {'class': {'route-template': true}},
+                                    moduleObject ? [h(moduleObject)] : [`Not Found: ${moduleUrl}`],
+                                ),
+                            ],
+                        );
+                    },
+                };
+
+                routesUnique.push(id);
+                this.$router.addRoutes([{
+                    path, name, component,
+                    meta: {
+                        keepAlive: true, //需要被缓存的组件
+                    },
+                }]);
             },
         },
         /*render(h) {
